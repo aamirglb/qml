@@ -20,6 +20,7 @@ Item {
         id: rect2
         x: 112; y: 12
         width: 76; height: 96
+        color: "transparent"
 //        border.color: "lightsteelblue"
         border.color: "#FF0000"
         border.width: 4
