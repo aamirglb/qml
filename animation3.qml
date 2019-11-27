@@ -10,6 +10,16 @@ DarkSquare {
 //        anchors.topMargin: 10
 //        spacing: 10
 
+    function changeState() {
+        if( second.state == '' || second.state == 'backward') {
+            second.state = 'forward'
+
+        } else {
+            second.state = 'backward'
+        }
+    }
+
+
         RedSquare {
             id: first
             anchors.top: parent.top
@@ -26,19 +36,74 @@ DarkSquare {
             }
         }
 
-        BlueSquare {
+        BlueSquare {            
             id: second
             text: ''
             anchors.top: first.bottom
             anchors.topMargin: 20
             anchors.left: first.left
 
-            NumberAnimation on width {
-                from: 48
-                to: 144
-                duration: 2000
-                loops: Animation.Infinite
+            states: [
+                State {
+                    name: "forward"
+                    PropertyChanges {
+                        target: second
+                        width: 144
+                    }
+                },
+                State {
+                    name: "backward"
+                    PropertyChanges {
+                        target: second
+                        width: 48
+                    }
+                }
+            ]
+
+            transitions: [
+                Transition {
+                    from: ""
+                    to: "forward"
+                    reversible: true
+                    NumberAnimation {
+                        properties: "width"; duration: 1000;
+                    }
+                },
+                Transition {
+                    from: "forward"
+                    to: "backward"
+                    reversible: true
+                    NumberAnimation {
+                        properties: "width"; duration: 1000;
+                    }
+                },
+                Transition {
+                    from: "backward"
+                    to: "forward"
+                    reversible: true
+                    NumberAnimation {
+                        properties: "width"; duration: 2000;
+                    }
+                }
+            ]
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: changeState()
             }
+
+            Timer {
+                interval: 1100; running: true; repeat: true
+                triggeredOnStart: true
+                onTriggered: changeState()
+            }
+
+//            NumberAnimation on width {
+//                from: 48
+//                to: 144
+//                duration: 2000
+//                loops: Animation.Infinite
+//            }
 
 //            SequentialAnimation {
 //                PropertyAction { target: second; property: "smooth"; value: "true" }
