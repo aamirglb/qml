@@ -3,6 +3,7 @@ import QtQuick 2.12
 DarkSquare {
     width: 400; height: 400
 
+
     Rectangle {
         anchors.centerIn: parent
         z: 1
